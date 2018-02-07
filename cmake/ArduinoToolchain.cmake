@@ -12,11 +12,6 @@ endif ()
 set(_IS_TOOLCHAIN_PROCESSED True)
 
 set(CMAKE_SYSTEM_NAME Arduino)
-
-set(CMAKE_C_COMPILER avr-gcc)
-set(CMAKE_ASM_COMPILER avr-gcc)
-set(CMAKE_CXX_COMPILER avr-g++)
-
 # Add current directory to CMake Module path automatically
 if (EXISTS ${CMAKE_CURRENT_LIST_DIR}/Platform/Arduino.cmake)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR})
@@ -84,11 +79,10 @@ elseif ((NOT ARDUINO_SDK_PATH) AND (DEFINED ENV{_ARDUINO_CMAKE_WORKAROUND_ARDUIN
     set(ARDUINO_SDK_PATH "$ENV{_ARDUINO_CMAKE_WORKAROUND_ARDUINO_SDK_PATH}")
 endif ()
 
-if (ARDUINO_SDK_PATH)
-    set(ENV{_ARDUINO_CMAKE_WORKAROUND_ARDUINO_SDK_PATH} "${ARDUINO_SDK_PATH}")
+IF(ARDUINO_SMT32)
+  include(${CMAKE_CURRENT_LIST_DIR}/ArduinoToolchainStm32.cmake)
+ELSE(ARDUINO_SMT32)
+  include(${CMAKE_CURRENT_LIST_DIR}/ArduinoToolchainAvr.cmake)
+ENDIF(ARDUINO_SMT32)
 
-    list(APPEND CMAKE_SYSTEM_PREFIX_PATH ${ARDUINO_SDK_PATH}/hardware/tools/avr)
-    list(APPEND CMAKE_SYSTEM_PREFIX_PATH ${ARDUINO_SDK_PATH}/hardware/tools/avr/utils)
-else ()
-    message(FATAL_ERROR "Could not find Arduino SDK (set ARDUINO_SDK_PATH)!")
-endif ()
+
