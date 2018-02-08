@@ -1,7 +1,7 @@
 #=============================================================================#
 #                              C Flags
 #=============================================================================#
-include(${CMAKE_CURRENT_LIST_DIR}/DefaultCFlags${ARDUINO_ARCHITECTURE_POSTFIX}.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/DefaultCFlags${PLATFORM_ARCHITECTURE_POSTFIX}.cmake)
 #=============================================================================#
 # setup_c_flags
 # [PRIVATE/INTERNAL]
