@@ -1,10 +1,6 @@
 # ToDo: Comment
 function(set_board_compiler_flags COMPILER_FLAGS NORMALIZED_SDK_VERSION BOARD_ID IS_MANUAL)
-
-    _get_board_property(${BOARD_ID} build.f_cpu FCPU)
-    _get_board_property(${BOARD_ID} build.mcu MCU)
-    set(COMPILE_FLAGS "-DF_CPU=${FCPU} -DARDUINO=${NORMALIZED_SDK_VERSION} -mmcu=${MCU}")
-
+    include(${CMAKE_CURRENT_LIST_DIR}/cmake/Platform/Core/BoardFlags/CompilerFlagsSetter${PLATFORM_ARCHITECTURE_POSTFIX}.cmake)
     _try_get_board_property(${BOARD_ID} build.vid VID)
     _try_get_board_property(${BOARD_ID} build.pid PID)
     if (VID)
