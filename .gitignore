@@ -42,7 +42,8 @@ CTestTestfile.cmake
 *.exe
 *.out
 *.app
-
+# Vi temp files
+*.sw*
 ### C template
 # Prerequisites
 

@@ -33,19 +33,7 @@ endfunction()
 
 # ToDo: Comment
 function(set_board_compiler_flags COMPILER_FLAGS NORMALIZED_SDK_VERSION BOARD_ID IS_MANUAL)
-
-    _try_get_board_property(${BOARD_ID} build.f_cpu FCPU)
-    if(NOT "${FCPU}" STREQUAL "")
-       set(COMPILE_FLAGS "-DF_CPU=${FCPU}")
-    endif()
-    
-    _try_get_board_property(${BOARD_ID} build.mcu MCU)    
-    if(NOT "${MCU}" STREQUAL "")
-       set(COMPILE_FLAGS "${COMPILE_FLAGS} -mmcu=${MCU}")
-    endif()
-    
-    set(COMPILE_FLAGS "${COMPILE_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION}")
-
+    include(${CMAKE_CURRENT_LIST_DIR}/cmake/Platform/Core/BoardFlags/CompilerFlagsSetter${PLATFORM_ARCHITECTURE_POSTFIX}.cmake)
     _try_get_board_property(${BOARD_ID} build.vid VID)
     _try_get_board_property(${BOARD_ID} build.pid PID)
     if (VID)

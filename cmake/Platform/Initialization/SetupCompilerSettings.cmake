@@ -1,6 +1,7 @@
 #=============================================================================#
 #                              C Flags
 #=============================================================================#
+include(${CMAKE_CURRENT_LIST_DIR}/DefaultCFlags${PLATFORM_ARCHITECTURE_POSTFIX}.cmake)
 #=============================================================================#
 # setup_c_flags
 # [PRIVATE/INTERNAL]
@@ -11,7 +12,7 @@
 #=============================================================================#
 function(setup_c_flags)
     if (NOT DEFINED ARDUINO_C_FLAGS)
-        set(ARDUINO_C_FLAGS "-mcall-prologues -ffunction-sections -fdata-sections")
+        set(ARDUINO_C_FLAGS "${ARDUINO_DEFAULT_CFLAGS}"   CACHE INTERNAL "") 
     endif (NOT DEFINED ARDUINO_C_FLAGS)
     set(CMAKE_C_FLAGS "-g -Os       ${ARDUINO_C_FLAGS}" CACHE STRING "")
     set(CMAKE_C_FLAGS_DEBUG "-g           ${ARDUINO_C_FLAGS}" CACHE STRING "")
@@ -33,7 +34,7 @@ endfunction()
 #=============================================================================#
 function(setup_cxx_flags)
     if (NOT DEFINED ARDUINO_CXX_FLAGS)
-        set(ARDUINO_CXX_FLAGS "${ARDUINO_C_FLAGS} -fno-exceptions")
+        set(ARDUINO_CXX_FLAGS "${ARDUINO_C_FLAGS} -fno-exceptions " CACHE INTERNAL "")
     endif (NOT DEFINED ARDUINO_CXX_FLAGS)
     set(CMAKE_CXX_FLAGS "-g -Os       ${ARDUINO_CXX_FLAGS}" CACHE STRING "")
     set(CMAKE_CXX_FLAGS_DEBUG "-g           ${ARDUINO_CXX_FLAGS}" CACHE STRING "")
