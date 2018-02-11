@@ -18,9 +18,10 @@
 function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
         COMPILE_FLAGS LINK_FLAGS MANUAL)
 
-    SET(VARIANT_FOLDER ${${BOARD_ID}.build.variant})
-    SET(RUNTIME_FILES_PATH ${BOARD_CORE_PATH}/../../variants/${VARIANT_FOLDER}/)
     string(STRIP "${ALL_SRCS}" ALL_SRCS)
+
+    SET(VARIANT_FOLDER ${${BOARD_ID}.build.variant})
+    SET(RUNTIME_FILES_PATH ${${VARIANT_FOLDER}.path})
     if(ARDUINO_CMAKE_GENERATE_SHARED_LIBRARIES)
         add_library(${TARGET_NAME} SHARED "${ALL_SRCS}")
     else()
