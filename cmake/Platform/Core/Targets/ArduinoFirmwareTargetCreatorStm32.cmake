@@ -20,8 +20,8 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
 
     string(STRIP "${ALL_SRCS}" ALL_SRCS)
 
-    SET(VARIANT_FOLDER ${${BOARD_ID}.build.variant})
-    SET(RUNTIME_FILES_PATH ${${VARIANT_FOLDER}.path})
+    set(VARIANT_FOLDER ${${BOARD_ID}.build.variant})
+    set(RUNTIME_FILES_PATH ${${VARIANT_FOLDER}.path})
     if(ARDUINO_CMAKE_GENERATE_SHARED_LIBRARIES)
         add_library(${TARGET_NAME} SHARED "${ALL_SRCS}")
     else()
@@ -32,20 +32,30 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
         FOREACH(w ${WIRISH})
             SET(wirish_files ${wirish_files} ${w})
         ENDFOREACH(w ${WIRISH})
+        MESSAGE(STATUS "${wirish_files}")
     
-        #get_cmake_property(_variableNames VARIABLES)
-        #foreach (_variableName ${_variableNames})
-            #message(STATUS "${_variableName}=${${_variableName}}")
-        #endforeach()
+        get_cmake_property(_variableNames VARIABLES)
+        foreach (_variableName ${_variableNames})
+            message(STATUS "${_variableName}=${${_variableName}}")
+        endforeach()
         add_executable(${TARGET_NAME} ${RUNTIME_FILES_PATH}/board.cpp ${wirish_files} ${ALL_SRCS})
     endif()
     set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".elf")
 
+    # depending on the upload method we use different ld script
+    # let's hardcode to bootloader for now 
+    SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript} -L${RUNTIME_FILES_PATH}/ld") # Hack
+    MESSAGE(STATUS "Bootloader : <${BOOTLOADER_LINK_OPT}>")
+    SET(MAP_OPT  "-Wl,-Map,${TARGET_NAME}.map")
+
+    #
     set_board_flags(ARDUINO_COMPILE_FLAGS ARDUINO_LINK_FLAGS ${BOARD_ID} ${MANUAL})
+
+    # Add ld script
 
     set_target_properties(${TARGET_NAME} PROPERTIES
             COMPILE_FLAGS "${ARDUINO_COMPILE_FLAGS} ${COMPILE_FLAGS}"
-            LINK_FLAGS "${ARDUINO_LINK_FLAGS} ${LINK_FLAGS}")
+            LINK_FLAGS "${ARDUINO_LINK_FLAGS} ${MAP_OPT} ${BOOTLOADER_LINK_OPT} ${LINK_FLAGS}")
             
     list(REMOVE_DUPLICATES ALL_LIBS)
 
