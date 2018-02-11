@@ -1,7 +1,7 @@
 #_get_board_property(${BOARD_ID} speed_72mhz.build.f_cpu FCPU) # Sane default...
-SET(FCPU "72000000L") # Hack
-#    _get_board_property(${BOARD_ID} build.mcu MCU)
-set(COMPILE_FLAGS "-DF_CPU=${FCPU} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
+_get_board_property(${BOARD_ID} menu.cpu.speed_72mhz.build.f_cpu FCPU)
+_get_board_property(${BOARD_ID} menu.cpu.${ARDUINO_CPU}.build.cpu_flags CPU_FLAGS)
+set(COMPILE_FLAGS "-DF_CPU=${FCPU} ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
 # This should be derived from the arduino config files
 # hardcode them for the moment
 SET(STM32_SYSTEM_ROOT "-I\"${${BOARD_CORE}.path}/../../system/")
