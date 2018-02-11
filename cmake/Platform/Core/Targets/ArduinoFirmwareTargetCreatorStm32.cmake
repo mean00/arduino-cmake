@@ -18,11 +18,25 @@
 function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
         COMPILE_FLAGS LINK_FLAGS MANUAL)
 
+    SET(VARIANT_FOLDER ${${BOARD_ID}.build.variant})
+    SET(RUNTIME_FILES_PATH ${BOARD_CORE_PATH}/../../variants/${VARIANT_FOLDER}/)
     string(STRIP "${ALL_SRCS}" ALL_SRCS)
     if(ARDUINO_CMAKE_GENERATE_SHARED_LIBRARIES)
         add_library(${TARGET_NAME} SHARED "${ALL_SRCS}")
     else()
-        add_executable(${TARGET_NAME} "${ALL_SRCS}")
+        # Here we add the content of the wirish subfolder for the variant 
+        # + the board.cpp files
+        MESSAGE(STATUS "Adding runtime wirish files from ${RUNTIME_FILES_PATH}")
+        file(GLOB WIRISH ${RUNTIME_FILES_PATH}/wirish/*.*)
+        FOREACH(w ${WIRISH})
+            SET(wirish_files ${wirish_files} ${w})
+        ENDFOREACH(w ${WIRISH})
+    
+        #get_cmake_property(_variableNames VARIABLES)
+        #foreach (_variableName ${_variableNames})
+            #message(STATUS "${_variableName}=${${_variableName}}")
+        #endforeach()
+        add_executable(${TARGET_NAME} ${RUNTIME_FILES_PATH}/board.cpp ${wirish_files} ${ALL_SRCS})
     endif()
     set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".elf")
 
@@ -65,8 +79,8 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND ${CMAKE_OBJCOPY}
             ARGS ${ARDUINO_OBJCOPY_HEX_FLAGS}
-            ${TARGET_PATH}.elf
-            ${TARGET_PATH}.hex
+            ${TARGET_NAME}.elf
+            ${TARGET_NAME}.hex
             COMMENT "Generating HEX image"
             VERBATIM)
     #_get_board_property(${BOARD_ID} build.mcu MCU)
