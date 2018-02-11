@@ -4,14 +4,15 @@ SET(PLATFORM_ARCHITECTURE "STM32F1")
 # Must be named arduino
 #  else the cmake code will look for ARDUINO
 # while the name will be the name of the folder
-SET(PLATFORM_PATH "/opt/arduino-1.8.1/hardware/STM32/arduino")
-SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/.arduino15/./packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin")
+SET(PLATFORM_PATH "/opt/arduino-1.8.5/hardware/STM32/arduino")
+#SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/.arduino15/./packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin")
+SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/.arduino15/packages/STM32/tools/arm-none-eabi-gcc/6-2017-q2-update/bin")
 # and here we go
 SET(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake)
 MESSAGE(STATUS "Starting hello-stm32")
 
 cmake_minimum_required(VERSION 2.8)
-Project("Hello_stm32" C CXX)
+Project("Hello_stm32" C CXX ASM)
 
 print_board_list()
 
