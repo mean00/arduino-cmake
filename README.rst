@@ -1,7 +1,9 @@
 
-This is in-progress work to use the *VERY* nice arduino-cmake project to support STM32 based board.
+This is in-progress work so that the *VERY* nice arduino-cmake project supports STM32 based board.
+(it's easy to extend to others)
 
 Installation : 
+
 - Install a toolchain. Simplest is to use the arduino ide and install either SAM Board (32 bits ARM Cortex M3) or or STM32 cores by ST
 . The ST one is significantly more recent. Write down the path to the arm-none-eabi-gcc and friends
 
@@ -12,9 +14,10 @@ That last folder *must* be  named arduino (i.e. /foo/bar/arduino/STM32F1 /foo/ba
 (i.e. cd /opt/arduino-1.8.5/hardware/STM32/arduino/tools/linux64/stlink && ./st-flash  write ~/Arduino_stm32/STM32duino-bootloader/binaries/generic_boot20_pc13.bin 0x8000000)
 
 - Copy the example/stm32 content somewhere so that you have
-     Cmakelists.txt
-     Hello.ino
-     cmake/   (symlink to the cmake subfolder of arduino-cmake, or just copy it)
+ Cmakelists.txt
+ Hello.ino
+ cmake/   (symlink to the cmake subfolder of arduino-cmake, or just copy it)
+
 - Change the cmakelists.txt and use paths you noted before (toolchain &  arduino STM32 file in the  example)
 
 - cmake .. && make
