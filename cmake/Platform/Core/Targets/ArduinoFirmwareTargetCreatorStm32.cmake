@@ -28,17 +28,23 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
         # Here we add the content of the wirish subfolder for the variant 
         # + the board.cpp files
         MESSAGE(STATUS "Adding runtime wirish files from ${RUNTIME_FILES_PATH}")
-        file(GLOB WIRISH ${RUNTIME_FILES_PATH}/wirish/*.*)
-        FOREACH(w ${WIRISH})
-            SET(wirish_files ${wirish_files} ${w})
-        ENDFOREACH(w ${WIRISH})
+        #file(GLOB WIRISH ${RUNTIME_FILES_PATH}/wirish/*.*)
+        #FOREACH(w ${WIRISH})
+            #SET(wirish_files ${wirish_files} ${w})
+        #ENDFOREACH(w ${WIRISH})
+        #MESSAGE(STATUS "${wirish_files}")
+        #Order is important
+        FOREACH(src start.S  start_c.c  syscalls.c ../board.cpp boards.cpp  boards_setup.cpp  )
+            SET(wirish_files ${wirish_files} ${RUNTIME_FILES_PATH}/wirish/${src} )
+        ENDFOREACH(src boards.cpp  boards_setup.cpp  start_c.c  start.S  syscalls.c)
         MESSAGE(STATUS "${wirish_files}")
     
-        get_cmake_property(_variableNames VARIABLES)
-        foreach (_variableName ${_variableNames})
-            message(STATUS "${_variableName}=${${_variableName}}")
-        endforeach()
-        add_executable(${TARGET_NAME} ${RUNTIME_FILES_PATH}/board.cpp ${wirish_files} ${ALL_SRCS})
+        #get_cmake_property(_variableNames VARIABLES)
+        #foreach (_variableName ${_variableNames})
+            #message(STATUS "${_variableName}=${${_variableName}}")
+        #endforeach()
+        #add_executable(${TARGET_NAME} ${RUNTIME_FILES_PATH}/board.cpp ${wirish_files} ${ALL_SRCS})
+        add_executable(${TARGET_NAME} ${wirish_files} ${ALL_SRCS})
     endif()
     set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".elf")
 
@@ -52,7 +58,7 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
     set_board_flags(ARDUINO_COMPILE_FLAGS ARDUINO_LINK_FLAGS ${BOARD_ID} ${MANUAL})
 
     # Add ld script
-
+    MESSAGE(STATUS "ARDUINO_LINK_FLAGS ${ARDUINO_LINK_FLAGS},  LINK_FLAGS: ${LINK_FLAGS}")
     set_target_properties(${TARGET_NAME} PROPERTIES
             COMPILE_FLAGS "${ARDUINO_COMPILE_FLAGS} ${COMPILE_FLAGS}"
             LINK_FLAGS "${ARDUINO_LINK_FLAGS} ${MAP_OPT} ${BOOTLOADER_LINK_OPT} ${LINK_FLAGS}")
