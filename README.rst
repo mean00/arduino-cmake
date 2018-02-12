@@ -1,5 +1,3 @@
 
-This is in progress work to use the *VERY* nice arduino-cmake project with other boards supported by arduino.
-In particular stm32 ones.
-
-
+This is an experimental extension of arduino-cmake to support the STM32 boards
+PLEASE USE THE develop BRANCH, more or less in sync with arduino-cmake develop branch
