@@ -43,7 +43,6 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
         #foreach (_variableName ${_variableNames})
             #message(STATUS "${_variableName}=${${_variableName}}")
         #endforeach()
-        #add_executable(${TARGET_NAME} ${RUNTIME_FILES_PATH}/board.cpp ${wirish_files} ${ALL_SRCS})
         add_executable(${TARGET_NAME} ${wirish_files} ${ALL_SRCS})
     endif()
     set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".elf")
@@ -95,12 +94,19 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
     # Convert firmware image to ASCII HEX format
     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND ${CMAKE_OBJCOPY}
-            ARGS ${ARDUINO_OBJCOPY_HEX_FLAGS}
+            ARGS -Oihex
             ${TARGET_NAME}.elf
             ${TARGET_NAME}.hex
             COMMENT "Generating HEX image"
             VERBATIM)
-    #_get_board_property(${BOARD_ID} build.mcu MCU)
+     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_OBJCOPY}
+            ARGS -Obinary
+            ${TARGET_NAME}.elf
+            ${TARGET_NAME}.bin
+            COMMENT "Generating BIN image"
+            VERBATIM)
+#_get_board_property(${BOARD_ID} build.mcu MCU)
     # Display target size
     #add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             #COMMAND ${CMAKE_COMMAND}
