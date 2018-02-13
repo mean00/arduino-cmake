@@ -26,11 +26,11 @@ function(create_arduino_bootloader_upload_target TARGET_NAME BOARD_ID PORT AVRDU
     endif ()
     set(TARGET_PATH ${EXECUTABLE_OUTPUT_PATH}/${TARGET_NAME})
 
+    SET(USB_PID "0004")
+
     add_custom_target(${UPLOAD_TARGET}
-            /opt/arduino-1.8.5/hardware/Arduino_STM32-master/tools/linux/maple_upload
-#${ARDUINO_AVRDUDE_PROGRAM}
-             ttyACM0 2 1EAF:0004 
-            #${AVRDUDE_ARGS}
+            ${PLATFORM_PATH}/tools/linux/maple_upload # HACK
+             ${PORT} 2 1EAF:${USB_PID} 
             ${TARGET_PATH}.bin
             DEPENDS ${TARGET_NAME})
 

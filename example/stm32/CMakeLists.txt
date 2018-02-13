@@ -18,7 +18,7 @@ print_board_list()
 
 
 set(ARDUINO_DEFAULT_BOARD genericSTM32F103C) # Default Board ID, when not specified
-set(ARDUINO_DEFAULT_PORT /dev/ttyACM0) # Default Port, when not specified
+set(ARDUINO_DEFAULT_PORT ttyACM0) # Default Port, when not specified
 set(ARDUINO_CPU          STM32F103C8)
 
 generate_arduino_firmware(hello 
