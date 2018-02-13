@@ -1,6 +1,13 @@
 #_get_board_property(${BOARD_ID} speed_72mhz.build.f_cpu FCPU) # Sane default...
 _get_board_property(${BOARD_ID} menu.cpu.speed_72mhz.build.f_cpu FCPU)
-_get_board_property(${BOARD_ID} menu.cpu.${ARDUINO_CPU}.build.cpu_flags CPU_FLAGS)
+#
+_try_get_board_property(${BOARD_ID} menu.cpu.${ARDUINO_CPU}.build.cpu_flags TRY_CPU_FLAGS)
+IF(TRY_CPU_FLAGS)
+    SET(CPU_FLAGS ${TRY_CPU_FLAGS})
+ELSE(TRY_CPU_FLAGS)
+    _get_board_property(${BOARD_ID} build.cpu_flags CPU_FLAGS)
+ENDIF(TRY_CPU_FLAGS)
+
 set(COMPILE_FLAGS "-DF_CPU=${FCPU} ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
 # This should be derived from the arduino config files
 # hardcode them for the moment
