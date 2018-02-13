@@ -49,7 +49,13 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
 
     # depending on the upload method we use different ld script
     # let's hardcode to bootloader for now 
-    SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript} -L${RUNTIME_FILES_PATH}/ld") # Hack
+    if( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
+        SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript} ") # Hack
+    else( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
+        SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.bootloader20.build.ldscript} ") # Hack
+    endif( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
+
+    SET(BOOTLOADER_LINK_OPT  "${BOOTLOADER_LINK_OPT} -L${RUNTIME_FILES_PATH}/ld") # Hack
     MESSAGE(STATUS "Bootloader : <${BOOTLOADER_LINK_OPT}>")
     SET(MAP_OPT  "-Wl,-Map,${TARGET_NAME}.map")
 
