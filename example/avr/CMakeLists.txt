@@ -8,7 +8,7 @@ set(ARDUINO_DEFAULT_PORT /dev/ttyUSB0) # Default Port, when not specified
 #====================================================================#
 # master_writer example from Wire library
 #====================================================================#
-GENERATE_ARDUINO_LIBRARY_EXAMPLE(wire_example
+generate_arduino_library_example(wire_example
         LIBRARY Wire
         EXAMPLE master_writer
         BOARD uno)
@@ -22,7 +22,7 @@ GENERATE_ARDUINO_LIBRARY_EXAMPLE(wire_example
 #====================================================================#
 # Original blink example (from Arduino SDK examples)
 #====================================================================#
-GENERATE_ARDUINO_EXAMPLE(blink_example
+generate_arduino_example(blink_example
         CATEGORY Basics
         EXAMPLE Blink
         BOARD uno)
@@ -53,7 +53,7 @@ generate_arduino_firmware(blink_original
         SERIAL picocom @SERIAL_PORT@
         BOARD uno)
 
-GENERATE_ARDUINO_FIRMWARE(blink_file_original
+generate_arduino_firmware(blink_file_original
         SKETCH "${BLINK_FILE_SKETCH}"
         BOARD uno)
 
@@ -119,7 +119,7 @@ generate_arduino_firmware(blink
 #====================================================================#
 # Avr library linkage without copying lib to local directory
 #====================================================================#
-GENERATE_ARDUINO_FIRMWARE(serial_lib
+generate_arduino_firmware(serial_lib
         SRCS serial.cpp
         ARDLIBS SoftwareSerial
         BOARD uno)

@@ -1,9 +1,9 @@
 #=============================================================================#
-# GENERATE_ARDUINO_LIBRARY
+# generate_arduino_library
 # [PUBLIC/USER]
 # see documentation at README
 #=============================================================================#
-function(GENERATE_ARDUINO_LIBRARY INPUT_NAME)
+function(generate_arduino_library INPUT_NAME)
     message(STATUS "Generating ${INPUT_NAME}")
     parse_generator_arguments(${INPUT_NAME} INPUT
             "NO_AUTOLIBS;MANUAL"                  # Options
@@ -20,7 +20,7 @@ function(GENERATE_ARDUINO_LIBRARY INPUT_NAME)
     if (NOT INPUT_MANUAL)
         set(INPUT_MANUAL FALSE)
     endif ()
-    VALIDATE_VARIABLES_NOT_EMPTY(VARS INPUT_SRCS INPUT_BOARD MSG "must define for target ${INPUT_NAME}")
+    validate_variables_not_empty(VARS INPUT_SRCS INPUT_BOARD MSG "must define for target ${INPUT_NAME}")
 
     _get_board_id(${INPUT_BOARD} "${INPUT_BOARD_CPU}" ${INPUT_NAME} BOARD_ID)
 

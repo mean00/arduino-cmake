@@ -6,7 +6,7 @@
 #
 # see documentation at top
 #=============================================================================#
-function(PRINT_BOARD_LIST)
+function(print_board_list)
     foreach (PLATFORM ${ARDUINO_PLATFORMS})
         if (${PLATFORM}_BOARDS)
             message(STATUS "${PLATFORM} Boards:")
@@ -24,7 +24,7 @@ endfunction()
 #
 # see documentation at top
 #=============================================================================#
-function(PRINT_PROGRAMMER_LIST)
+function(print_programmer_list)
     foreach (PLATFORM ${ARDUINO_PLATFORMS})
         if (${PLATFORM}_PROGRAMMERS)
             message(STATUS "${PLATFORM} Programmers:")
@@ -42,7 +42,7 @@ endfunction()
 #
 # see documentation at top
 #=============================================================================#
-function(PRINT_PROGRAMMER_SETTINGS PROGRAMMER)
+function(print_programmer_settings PROGRAMMER)
     if (${PROGRAMMER}.SETTINGS)
         message(STATUS "Programmer ${PROGRAMMER} Settings:")
         print_settings(${PROGRAMMER})
@@ -56,7 +56,7 @@ endfunction()
 # print_board_settings(ARDUINO_BOARD)
 #
 # see documentation at top
-function(PRINT_BOARD_SETTINGS ARDUINO_BOARD)
+function(print_board_settings ARDUINO_BOARD)
     if (${ARDUINO_BOARD}.SETTINGS)
         message(STATUS "Arduino ${ARDUINO_BOARD} Board:")
         print_settings(${ARDUINO_BOARD})
@@ -74,7 +74,7 @@ endfunction()
 # Print the entry settings (see load_arduino_syle_settings()).
 #
 #=============================================================================#
-function(PRINT_SETTINGS ENTRY_NAME)
+function(print_settings ENTRY_NAME)
     if (${ENTRY_NAME}.SETTINGS)
 
         foreach (ENTRY_SETTING ${${ENTRY_NAME}.SETTINGS})
@@ -103,7 +103,7 @@ endfunction()
 #
 # Print list settings and names (see load_arduino_syle_settings()).
 #=============================================================================#
-function(PRINT_LIST SETTINGS_LIST)
+function(print_list SETTINGS_LIST)
     if (${SETTINGS_LIST})
         set(MAX_LENGTH 0)
         foreach (ENTRY_NAME ${${SETTINGS_LIST}})

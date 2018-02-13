@@ -6,7 +6,7 @@
 #
 # Enables Arduino module debugging.
 #=============================================================================#
-function(ARDUINO_DEBUG_ON)
+function(arduino_debug_on)
     set(ARDUINO_DEBUG True PARENT_SCOPE)
 endfunction()
 
@@ -18,7 +18,7 @@ endfunction()
 #
 # Disables Arduino module debugging.
 #=============================================================================#
-function(ARDUINO_DEBUG_OFF)
+function(arduino_debug_off)
     set(ARDUINO_DEBUG False PARENT_SCOPE)
 endfunction()
 
@@ -33,7 +33,7 @@ endfunction()
 # Print Arduino debugging information. In order to enable printing
 # use arduino_debug_on() and to disable use arduino_debug_off().
 #=============================================================================#
-function(ARDUINO_DEBUG_MSG MSG)
+function(arduino_debug_msg MSG)
     if (ARDUINO_DEBUG)
         message("## ${MSG}")
     endif ()

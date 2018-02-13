@@ -1,8 +1,8 @@
 #=============================================================================#
-# _REMOVE_BLACKLISTED_LIBRARIES
+# _remove_blacklisted_libraries
 # [PRIVATE/INTERNAL]
 #
-# _REMOVE_BLACKLISTED_LIBRARIES(LIBRARY_LIST OUTPUT_VAR)
+# _remove_blacklisted_libraries(LIBRARY_LIST OUTPUT_VAR)
 #
 #      LIBRARY_LIST - List of libraries to remove blacklisted libraries from
 #      OUTPUT_VAR - Original list of libraries without blacklisted libraries.
@@ -19,14 +19,14 @@
 # In the example above the blacklisted and remove library would be
 # ${ARDUINO_SDK_PATH}/libraries/Keyboard/src).
 #
-function(_REMOVE_BLACKLISTED_LIBRARIES LIBRARY_LIST OUTPUT_VAR)
+function(_remove_blacklisted_libraries LIBRARY_LIST OUTPUT_VAR)
     set(NEW_LIBS)
     foreach (LIB ${LIBRARY_LIST})
         list(FIND ARDUINO_LIBRARY_BLACKLIST "${LIB}" BLACKLISTED_LIB_INDEX)
         if (NOT ${BLACKLISTED_LIB_INDEX} GREATER -1)
             list(APPEND NEW_LIBS "${LIB}")
         else ()
-            ARDUINO_DEBUG_MSG("Suppressing blacklisted library ${LIB}")
+            arduino_debug_msg("Suppressing blacklisted library ${LIB}")
         endif ()
     endforeach ()
 

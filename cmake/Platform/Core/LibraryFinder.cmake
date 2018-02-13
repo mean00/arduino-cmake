@@ -143,7 +143,7 @@ function(find_arduino_libraries VAR_NAME SRCS ARDLIBS)
         list(REMOVE_DUPLICATES ARDUINO_LIBS)
     endif ()
 
-    _REMOVE_BLACKLISTED_LIBRARIES("${ARDUINO_LIBS}" FILTERED_LIBRARIES)
-    set(${VAR_NAME} ${FILTERED_LIBRARIES} PARENT_SCOPE)
+    _remove_blacklisted_libraries("${ARDUINO_LIBS}" FILTERED_LIBRARIES)
+    set(${VAR_NAME} "${FILTERED_LIBRARIES}" PARENT_SCOPE)
 
 endfunction()

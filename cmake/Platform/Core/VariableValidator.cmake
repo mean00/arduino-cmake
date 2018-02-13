@@ -1,15 +1,15 @@
 #=============================================================================#
-# VALIDATE_VARIABLES_NOT_EMPTY
+# validate_variables_not_empty
 # [PRIVATE/INTERNAL]
 #
-# VALIDATE_VARIABLES_NOT_EMPTY(MSG msg VARS var1 var2 .. varN)
+# validate_variables_not_empty(MSG msg VARS var1 var2 .. varN)
 #
 #        MSG - Message to display in case of error
 #        VARS - List of variables names to check
 #
 # Ensure the specified variables are not empty, otherwise a fatal error is emmited.
 #=============================================================================#
-function(VALIDATE_VARIABLES_NOT_EMPTY)
+function(validate_variables_not_empty)
     cmake_parse_arguments(INPUT "" "MSG" "VARS" ${ARGN})
     error_for_unparsed(INPUT)
     foreach (VAR ${INPUT_VARS})
@@ -29,7 +29,7 @@ endfunction()
 #
 # Emit fatal error if there are unparsed argument from cmake_parse_arguments().
 #=============================================================================#
-function(ERROR_FOR_UNPARSED PREFIX)
+function(error_for_unparsed PREFIX)
     set(ARGS "${${PREFIX}_UNPARSED_ARGUMENTS}")
     if (NOT ("${ARGS}" STREQUAL ""))
         message(FATAL_ERROR "unparsed argument: ${ARGS}")

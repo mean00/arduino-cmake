@@ -1,9 +1,9 @@
 #=============================================================================#
-# GENERATE_AVR_LIBRARY
+# generate_avr_library
 # [PUBLIC/USER]
 # see documentation at README
 #=============================================================================#
-function(GENERATE_AVR_LIBRARY INPUT_NAME)
+function(generate_avr_library INPUT_NAME)
     message(STATUS "Generating ${INPUT_NAME}")
     parse_generator_arguments(${INPUT_NAME} INPUT
             "NO_AUTOLIBS;MANUAL"                  # Options
@@ -18,7 +18,7 @@ function(GENERATE_AVR_LIBRARY INPUT_NAME)
         set(INPUT_BOARD_CPU ${ARDUINO_DEFAULT_BOARD_CPU})
     endif ()
 
-    VALIDATE_VARIABLES_NOT_EMPTY(VARS INPUT_SRCS INPUT_BOARD MSG "must define for target ${INPUT_NAME}")
+    validate_variables_not_empty(VARS INPUT_SRCS INPUT_BOARD MSG "must define for target ${INPUT_NAME}")
 
     if (INPUT_HDRS)
         set(INPUT_HDRS "SRCS ${INPUT_HDRS}")

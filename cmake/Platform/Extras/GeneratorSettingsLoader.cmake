@@ -23,7 +23,7 @@
 #  and to have a generic naming of the settings within the generator.
 #
 #=============================================================================#
-function(LOAD_GENERATOR_SETTINGS TARGET_NAME PREFIX)
+function(load_generator_settings TARGET_NAME PREFIX)
     foreach (GEN_SUFFIX ${ARGN})
         if (${TARGET_NAME}_${GEN_SUFFIX} AND NOT ${PREFIX}_${GEN_SUFFIX})
             set(${PREFIX}_${GEN_SUFFIX} ${${TARGET_NAME}_${GEN_SUFFIX}} PARENT_SCOPE)
