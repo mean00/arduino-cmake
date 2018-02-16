@@ -12,8 +12,28 @@ IF(NOT PLATFORM_TOOLCHAIN_PATH)
         MESSAGE(FATAL_ERROR "PLATFORM_TOOLCHAIN_PATH is not defined !")
 ENDIF(NOT PLATFORM_TOOLCHAIN_PATH)
 #
+
+
 LIST(APPEND CMAKE_SYSTEM_PREFIX_PATH "${PLATFORM_TOOLCHAIN_PATH}")
 SET(STM32_TOOLCHAIN_PREFIX arm-none-eabi-)
+
+FUNCTION(FATAL_BANNER msg)
+    MESSAGE(STATUS "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    MESSAGE(STATUS "${msg}")
+    MESSAGE(STATUS "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    MESSAGE(FATAL_ERROR "${msg}")
+ENDFUNCTION(FATAL_BANNER msg)
+
+#
+# Sanity check
+#
+IF(NOT EXISTS "${PLATFORM_TOOLCHAIN_PATH}/${STM32_TOOLCHAIN_PREFIX}gcc")
+   FATAL_BANNER( "!! PLATFORM_TOOLCHAIN_PATH does not point to a valid toolchain (arm-none-eabi-gcc....)!!")
+ENDIF()
+#
+IF(NOT EXISTS "${PLATFORM_PATH}/STM32F1")
+   FATAL_BANNER( "!! PLATFORM_PATH does not point to valid STM32 arduino files!!")
+ENDIF()
 #
 SET(CMAKE_C_COMPILER_ID   "GNU" CACHE INTERNAL "")
 SET(CMAKE_CXX_COMPILER_ID "GNU" CACHE INTERNAL "")

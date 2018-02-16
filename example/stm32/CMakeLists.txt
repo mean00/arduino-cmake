@@ -1,29 +1,37 @@
-
-# Select platform and installation for extra arduino files AND toolchain (compiler...)
+######################################
+#
+# Hello world for STM32/Cmake
+#
+######################################
+cmake_minimum_required(VERSION 3.0)
+#--------------------------------------------------------------------------------------
+# Select platform 
 SET(PLATFORM_ARCHITECTURE "STM32F1")
-# Must be named arduino
-#  else the cmake code will look for ARDUINO
-# while the name will be the name of the folder
-SET(PLATFORM_PATH "/opt/arduino-1.8.5/hardware/STM32/arduino")
-#SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/.arduino15/./packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin")
-SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/.arduino15/packages/STM32/tools/arm-none-eabi-gcc/6-2017-q2-update/bin")
+and installation for extra arduino files AND toolchain (compiler...)
+# Path to the toolchain, must contain arm-none-eabi-gcc,-g++ and friends
+SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/.arduino15/./packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin")
+#  Path to the platform folder
+# You can download it from https://github.com/rogerclarkmelbourne/Arduino_STM32.git 
+# The last folder MUST BE arduino
+SET(PLATFORM_PATH "/opt/arduino-1.8.1/hardware/STM32/arduino")
 # and here we go
 SET(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake)
 MESSAGE(STATUS "Starting hello-stm32")
-
-cmake_minimum_required(VERSION 2.8)
-Project("Hello_stm32" C CXX ASM)
+#
+#
+#
+Project("Hello_stm32" C CXX ASM) # ASM must be present !
 
 print_board_list()
 
-
+#
 set(ARDUINO_DEFAULT_BOARD genericSTM32F103C) # Default Board ID, when not specified
-set(ARDUINO_DEFAULT_PORT ttyACM0) # Default Port, when not specified
-set(ARDUINO_CPU          STM32F103C8)
-
+set(ARDUINO_DEFAULT_PORT  ttyACM0) # Default Port, when not specified
+set(ARDUINO_CPU           STM32F103C8)
+#
 generate_arduino_firmware(hello 
                 SKETCH hello.ino              # Folder to get the .ino from, must follow DIR_NAME/DIR_NAME.ino patten !
                 PORT ${ARDUINO_DEFAULT_PORT}
                 BOARD_CPU ${ARDUINO_CPU}
                 )
-
+#--------------------------------------------------------------------------------------
