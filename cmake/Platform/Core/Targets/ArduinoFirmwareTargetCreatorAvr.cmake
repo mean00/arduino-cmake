@@ -39,7 +39,20 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
       # all symbols from the intermediate static libraries end up in the
       # static library
       #
-      target_link_libraries(${TARGET_NAME} PUBLIC "-Wl,--whole-archive" ${ALL_LIBS} "-Wl,--no-whole-archive")
+      if(CMAKE_HOST_APPLE)
+         foreach(lib ${ALL_LIBS})
+            if(NOT "${linker_flags}" STREQUAL "")
+               set(linker_flags "${linker_flags} ")
+            endif()
+            set(linker_flags "${linker_flags}-Wl,-force_load,lib${lib}.a")
+         endforeach()
+#          message("linker_flags: ${linker_flags}")
+         target_link_libraries(${TARGET_NAME} PUBLIC ${linker_flags})
+      else()
+         target_link_libraries(${TARGET_NAME} PUBLIC "-Wl,--whole-archive" ${ALL_LIBS} "-Wl,--no-whole-archive")
+      endif()
+      
+      add_dependencies(${TARGET_NAME} ${ALL_LIBS})
     else()
       target_link_libraries(${TARGET_NAME} ${ALL_LIBS} "-lc -lm")
     endif()
