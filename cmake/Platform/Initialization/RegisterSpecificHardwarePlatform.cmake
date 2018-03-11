@@ -1,7 +1,9 @@
 #=============================================================================#
 # ToDo: Document
 #=============================================================================#
-
+IF(PLATFORM_PATH)
+    SET(ORIGINAL_PLATFORM_PATH ${PLATFORM_PATH})
+ENDIF(PLATFORM_PATH)
 set(PLATFORM_PATH "${BASE_PATH}/${VENDOR_ID}/${PLATFORM_ARCHITECTURE}")
 set(PLATFORM "${VENDOR_ID}")
 set(ARCHITECTURE_ID ${PLATFORM_ARCHITECTURE})

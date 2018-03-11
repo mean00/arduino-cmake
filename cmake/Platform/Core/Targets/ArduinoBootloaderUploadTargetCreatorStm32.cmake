@@ -31,10 +31,11 @@ function(create_arduino_bootloader_upload_target TARGET_NAME BOARD_ID PORT AVRDU
     ELSE(ARDUINO_USB_PID)
         SET(USB_PID "0004") # Default value
     ENDIF(ARDUINO_USB_PID)
+    SET(MAPLE_UPLOAD ${ORIGINAL_PLATFORM_PATH}/tools/linux/maple_upload CACHE INTERNAL "")
 
     add_custom_target(${UPLOAD_TARGET}
-            ${PLATFORM_PATH}/tools/linux/maple_upload # HACK
-             ${PORT} 2 1EAF:${USB_PID} 
+            ${MAPLE_UPLOAD}
+            ${PORT} 2 1EAF:${USB_PID} 
             ${TARGET_PATH}.bin
             DEPENDS ${TARGET_NAME})
 
