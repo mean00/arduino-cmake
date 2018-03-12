@@ -61,13 +61,14 @@ include(ArduinoLibraryGenerator)
 include(ArduinoFirmwareGenerator)
 include(ArduinoExampleGenerator)
 include(ArduinoLibraryExampleGenerator)
+# Mean00 : Needs to be included every time ????
+include(SetupRecursiveLibraries)
 
 if (IS_SCRIPT_PROCESSED)
     return()
 endif ()
 
 # Setup libraries known to be recursive only once
-include(SetupRecursiveLibraries)
 
 set(IS_SCRIPT_PROCESSED True CACHE BOOL
         "Indicates whether platform script has already been processed")
