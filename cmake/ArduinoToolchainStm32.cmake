@@ -28,11 +28,17 @@ ENDFUNCTION(FATAL_BANNER msg)
 # Sanity check
 #
 IF(NOT EXISTS "${PLATFORM_TOOLCHAIN_PATH}/${STM32_TOOLCHAIN_PREFIX}gcc")
-   FATAL_BANNER( "!! PLATFORM_TOOLCHAIN_PATH does not point to a valid toolchain (arm-none-eabi-gcc....)!!")
+   FATAL_BANNER( "!! PLATFORM_TOOLCHAIN_PATH does not point to a valid toolchain (arm-none-eabi-gcc....)!! (${PLATFORM_TOOLCHAIN_PATH})")
 ENDIF()
 #
-IF(NOT EXISTS "${PLATFORM_PATH}/STM32F1")
-   FATAL_BANNER( "!! PLATFORM_PATH does not point to valid STM32 arduino files!!")
+IF(EXISTS "${PLATFORM_PATH}/STM32F1")
+    MESSAGE(STATUS "Looks like RogerClark flavor...")
+    SET(STM32_FLAVOR "RGCLARCK" CACHE INTERNAL "")
+ELSEIF ( EXISTS "${PLATFORM_PATH}/system/STM32F1xx")
+    MESSAGE(STATUS "Looks like vanilla stm32duino")
+    SET(STM32_FLAVOR "VANILLA" CACHE INTERNAL "")
+ELSE()
+   FATAL_BANNER( "!! PLATFORM_PATH does not point to valid STM32 arduino files!! (${PLATFORM_PATH})")
 ENDIF()
 #
 SET(CMAKE_C_COMPILER_ID   "GNU" CACHE INTERNAL "")
