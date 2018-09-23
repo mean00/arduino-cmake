@@ -1,5 +1,5 @@
 
-This is in-progress work so that the *VERY* nice arduino-cmake project supports STM32 based board.
+This is in-progress work so that the *VERY* nice arduino-cmake project supports STM32 based board aka stm32duino.
 (it's easy to extend to others)
 
 Installation : 
