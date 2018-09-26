@@ -121,3 +121,6 @@ fabric.properties
 [Aa]ssets/*
 #
 example/stm32/cmake
+*.rej
+*.diff
+*.orig
