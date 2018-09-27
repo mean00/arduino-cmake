@@ -15,6 +15,11 @@
 # Creates an Arduino firmware target.
 #
 #=============================================================================#
+
+MACRO(DBG)
+        #MESSAGE(STATUS ${ARGN})
+ENDMACRO(DBG)
+
 function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
         COMPILE_FLAGS LINK_FLAGS MANUAL)
 
@@ -69,7 +74,6 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
             LINK_FLAGS "${ARDUINO_LINK_FLAGS} ${BOOTLOADER_LINK_OPT} ${LINK_FLAGS} ${MAP_OPT} ${LINK_FLAGS}")
             
     list(REMOVE_DUPLICATES ALL_LIBS)
-
     if(ARDUINO_CMAKE_GENERATE_SHARED_LIBRARIES)
       # When building a shared library we must make sure that
       # all symbols from the intermediate static libraries end up in the
@@ -77,7 +81,13 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
       #
       target_link_libraries(${TARGET_NAME} PUBLIC "-Wl,--whole-archive" ${ALL_LIBS} "-Wl,--no-whole-archive")
     else()
-      target_link_libraries(${TARGET_NAME} ${ALL_LIBS} "-lc -lm")
+       FOREACH(item ${ALL_LIBS})
+            DBG("\tFINAL LINK FLAGS : ${item}")
+            #ADD_DEPENDENCIES(${TARGET_NAME} ${item})
+            SET(FLAT_LIBS "${item} ${FLAT_LIBS}")
+            target_link_libraries(${TARGET_NAME} ${item})
+    ENDFOREACH(item ${ALL_LIBS})
+  #target_link_libraries(${TARGET_NAME} "${FLAT_LIBS} -lc -lm")
     endif()
     
     if (NOT EXECUTABLE_OUTPUT_PATH)
