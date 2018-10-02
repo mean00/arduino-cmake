@@ -15,7 +15,7 @@ set(COMPILE_FLAGS "-DF_CPU=${FCPU} ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSI
 
 #
 MACRO(DBG)
-    MESSAGE(STATUS ${ARGN})
+#    MESSAGE(STATUS ${ARGN})
 ENDMACRO(DBG)
 
 
@@ -44,9 +44,10 @@ MACRO(ADD_TO_COMPILE_FLAGS key prefix)
     endif( DEFINED ${BOARD_ID}.${key})
 ENDMACRO(ADD_TO_COMPILE_FLAGS key prefix)
 #
-SET(STM32_SYSTEM_ROOT "-I\"${${BOARD_CORE}.path}/../../system/")
+SET(STM32_SYSTEM_ROOT "-I\"${${BOARD_CORE}.path}/../../system")
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/\" ") # Hack, there is a better way to get the system path
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/include\" ") # Hack
+set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/include/libmaple\" ") # Hack
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/usb/usb_lib/\" ") # Hack
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/usb/stm32f1/\" ") # Hack
 
