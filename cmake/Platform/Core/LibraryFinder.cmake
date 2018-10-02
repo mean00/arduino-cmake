@@ -40,11 +40,15 @@ function(find_arduino_libraries VAR_NAME SRCS ARDLIBS)
             get_property(LIBRARY_SEARCH_PATH
                     DIRECTORY     # Property Scope
                     PROPERTY LINK_DIRECTORIES)
-
-            foreach (LIB_SEARCH_PATH ${LIBRARY_SEARCH_PATH}
+            #MESSAGE (STATUS "NN SEarch path :< ${CMAKE_CURRENT_SOURCE_DIR}, ${CMAKE_CURRENT_SOURCE_DIR}/libraries, ${LIBRARY_SEARCH_PATH}, ${ARDUINO_LIBRARIES_PATH}, ${ARDUINO_PLATFORM_LIBRARIES_PATH} ")
+             
+            foreach (LIB_SEARCH_PATH 
+                    ${CMAKE_CURRENT_SOURCE_DIR} # MEANX : search local libs 1st
+                    ${CMAKE_CURRENT_SOURCE_DIR}/libraries
+                    ${LIBRARY_SEARCH_PATH}
                     ${ARDUINO_LIBRARIES_PATH}
-                    ${ARDUINO_PLATFORM_LIBRARIES_PATH} ${CMAKE_CURRENT_SOURCE_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/libraries)
+                    ${ARDUINO_PLATFORM_LIBRARIES_PATH} 
+                )
                
                 _check_path_exists_case_sensitive(exists_case_sensitive 
                   "${LIB_SEARCH_PATH}/${LIB}/${LIB}.h")
@@ -114,11 +118,20 @@ function(find_arduino_libraries VAR_NAME SRCS ARDLIBS)
                         get_property(LIBRARY_SEARCH_PATH
                                 DIRECTORY     # Property Scope
                                 PROPERTY LINK_DIRECTORIES)
-                        foreach (LIB_SEARCH_PATH ${LIBRARY_SEARCH_PATH} ${ARDUINO_LIBRARIES_PATH} ${ARDUINO_PLATFORM_LIBRARIES_PATH} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/libraries ${ARDUINO_EXTRA_LIBRARIES_PATH})
+            #MESSAGE (STATUS "NN SEarch path :<  ${CMAKE_CURRENT_SOURCE_DIR}                                  ${CMAKE_CURRENT_SOURCE_DIR}/libraries ${LIBRARY_SEARCH_PATH} ${ARDUINO_LIBRARIES_PATH} ${ARDUINO_PLATFORM_LIBRARIES_PATH} ${ARDUINO_EXTRA_LIBRARIES_PATH}")
+                        foreach (LIB_SEARCH_PATH 
+                                ${CMAKE_CURRENT_SOURCE_DIR}  # MEANX Local libs first
+                                ${CMAKE_CURRENT_SOURCE_DIR}/libraries 
+                                ${LIBRARY_SEARCH_PATH} 
+                                ${ARDUINO_LIBRARIES_PATH} 
+                                ${ARDUINO_PLATFORM_LIBRARIES_PATH} 
+                                ${ARDUINO_EXTRA_LIBRARIES_PATH}
+                                )
                             _check_path_exists_case_sensitive(exists_case_sensitive
                               "${LIB_SEARCH_PATH}/${INCLUDE_NAME}/${CMAKE_MATCH_1}")
                             if (exists_case_sensitive)
                                 list(APPEND ARDUINO_LIBS ${LIB_SEARCH_PATH}/${INCLUDE_NAME})
+                                #MESSAGE(STATUS "Got it ${INCLUDE_NAME}")
                                 break()
                             endif ()
 
