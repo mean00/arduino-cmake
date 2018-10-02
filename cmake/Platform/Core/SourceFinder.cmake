@@ -26,8 +26,16 @@ function(find_sources VAR_NAME LIB_PATH RECURSE)
         file(GLOB SOURCE_FILES ${FILE_SEARCH_LIST})
     endif ()
 
-    if (SOURCE_FILES)
-        set(${VAR_NAME} ${SOURCE_FILES} PARENT_SCOPE)
+    # MEANX filter out examples and extra
+    FOREACH(file ${SOURCE_FILES})
+        IF((${file} MATCHES  ".*/examples/.*") OR ( ${file} MATCHES ".*/extra/.*"))
+            #MESSAGE(STATUS "${file} skipped")
+        ELSE()
+            LIST(APPEND SOURCE_FILES2 ${file})
+        ENDIF()
+    ENDFOREACH()
+    if (SOURCE_FILES2)
+        set(${VAR_NAME} ${SOURCE_FILES2} PARENT_SCOPE)
     endif ()
 endfunction()
 
