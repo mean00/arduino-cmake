@@ -7,7 +7,7 @@
 function(set_board_linker_flags LINKER_FLAGS BOARD_ID IS_MANUAL)
 
     set(LINK_FLAGS "${LINK_FLAGS} -Wl,--no-check-sections -u app_entry -u _printf_float -u _scanf_float \"-Teagle.flash.512k.ld\" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,spi_flash_read ")
-    set(LINK_FLAGS "${LINK_FLAGS} -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align -lstdc++ -L${PLATFORM_PATH}/tools/sdk/lib")
+    set(LINK_FLAGS "${LINK_FLAGS} -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align -lstdc++ ")
 #-Wl,--warn-unresolved-symbols -lstdc++")
     set(${LINKER_FLAGS} "${LINK_FLAGS}" PARENT_SCOPE)
 

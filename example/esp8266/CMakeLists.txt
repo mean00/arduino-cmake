@@ -10,6 +10,9 @@ SET(PLATFORM_ARCHITECTURE "ESP8266")
 # and installation for extra arduino files AND toolchain (compiler...)
 # Path to the toolchain, must contain arm-none-eabi-gcc,-g++ and friends
 SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/2.5.0-3-20ed2b9/bin/")
+set(CMAKE_C_COMPILER_WORKS 1)
+set(CMAKE_CXX_COMPILER_WORKS 1)
+set(CMAKE_ASM_COMPILER_WORKS 1)
 #  Path to the platform folder
 # You can download it from https://github.com/rogerclarkmelbourne/Arduino_STM32.git 
 # The last folder MUST BE arduino
@@ -32,9 +35,9 @@ print_board_list()
 SET(ARDUINO_UPLOAD_METHOD DFUUpload)
 
 #
-set(ARDUINO_DEFAULT_BOARD genericSTM32F103C) # Default Board ID, when not specified
+set(ARDUINO_DEFAULT_BOARD ESP8266_GENERIC) # Default Board ID, when not specified
 set(ARDUINO_DEFAULT_PORT  ttyACM0) # Default Port, when not specified
-set(ARDUINO_CPU           STM32F103C8)
+set(ARDUINO_CPU           esp8266)
 #
 generate_arduino_firmware(hello 
                 SKETCH hello.ino              # Folder to get the .ino from, must follow DIR_NAME/DIR_NAME.ino patten !
