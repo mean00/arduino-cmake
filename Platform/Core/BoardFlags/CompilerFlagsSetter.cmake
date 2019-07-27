@@ -33,7 +33,7 @@ endfunction()
 
 # ToDo: Comment
 function(set_board_compiler_flags COMPILER_FLAGS NORMALIZED_SDK_VERSION BOARD_ID IS_MANUAL)
-    include(${CMAKE_CURRENT_LIST_DIR}/cmake/Platform/Core/BoardFlags/CompilerFlagsSetter${PLATFORM_ARCHITECTURE_POSTFIX}.cmake)
+    include(${ARDUINO_CMAKE_TOP_FOLDER}/Platform/Core/BoardFlags/CompilerFlagsSetter${PLATFORM_ARCHITECTURE_POSTFIX}.cmake)
     _try_get_board_property(${BOARD_ID} build.vid VID)
     _try_get_board_property(${BOARD_ID} build.pid PID)
     if (VID)

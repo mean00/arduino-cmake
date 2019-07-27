@@ -17,9 +17,13 @@ ENDIF(NOT DEFINED PLATFORM_ARCHITECTURE)
 
 set(CMAKE_SYSTEM_NAME Arduino)
 # Add current directory to CMake Module path automatically
+IF(NOT DEFINED ARDUINO_CMAKE_TOP_FOLDER)
+
 if (EXISTS ${CMAKE_CURRENT_LIST_DIR}/Platform/Arduino.cmake)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR})
 endif ()
+    SET(ARDUINO_CMAKE_TOP_FOLDER ${CMAKE_CURRENT_LIST_DIR} CACHE INTERNAL "")
+ENDIF(NOT DEFINED ARDUINO_CMAKE_TOP_FOLDER)
 
 #=============================================================================#
 #                         System Paths                                        #

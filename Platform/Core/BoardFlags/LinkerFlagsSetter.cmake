@@ -1,1 +1,1 @@
-include(${CMAKE_CURRENT_LIST_DIR}/LinkerFlagsSetter${PLATFORM_ARCHITECTURE_POSTFIX}.cmake)
+include(${ARDUINO_CMAKE_TOP_FOLDER}/Platform/Core/BoardFlags/LinkerFlagsSetter${PLATFORM_ARCHITECTURE_POSTFIX}.cmake)
