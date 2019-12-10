@@ -50,6 +50,7 @@ set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/include\" ") #
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/include/libmaple\" ") # Hack
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/usb/usb_lib/\" ") # Hack
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/usb/stm32f1/\" ") # Hack
+set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/stm32f1/include/\" ")
 
 ADD_TO_COMPILE_FLAGS(build.vect   "")
 ADD_TO_COMPILE_FLAGS(menu.cpu.${ARDUINO_UPLOAD_METHOD}Method.build.vect  "")
