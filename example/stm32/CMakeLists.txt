@@ -9,11 +9,11 @@ cmake_minimum_required(VERSION 3.0)
 SET(PLATFORM_ARCHITECTURE "STM32F1")
 # and installation for extra arduino files AND toolchain (compiler...)
 # Path to the toolchain, must contain arm-none-eabi-gcc,-g++ and friends
-SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/.arduino15/./packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin")
+SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/Arduino_stm32/arm-none-eabi-gcc/download/gcc-arm-none-eabi-8.2.1-1.7/bin")
 #  Path to the platform folder
 # You can download it from https://github.com/rogerclarkmelbourne/Arduino_STM32.git 
-# The last folder MUST BE arduino
-SET(PLATFORM_PATH "/home/fx/Arduino/hardware/arduino")
+# Go the STM32F1 path
+SET(PLATFORM_PATH "/home/fx/Arduino/hardware/stm32/STM32F1")
 # and here we go
 SET(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake)
 MESSAGE(STATUS "Starting hello-stm32")
