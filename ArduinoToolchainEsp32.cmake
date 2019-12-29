@@ -45,7 +45,7 @@ SET(ESP32_LIBS  "-lgcc -lesp32 -lphy -lesp_http_client -lmbedtls -lrtc -lesp_htt
 SET(ESP32_OPTS " -Wl,-EL    -u ld_include_panic_highint_hdl -u call_user_start_cpu0  -Wl,-static -Wl,--undefined=uxTopUsedPriority -u __cxa_guard_dummy -u __cxx_fatal_exception  ")
 SET(ESP32_LD  "-T esp32_out.ld -T esp32.common.ld -T esp32.rom.ld -T esp32.peripherals.ld -T esp32.rom.libgcc.ld -T esp32.rom.spiram_incompatible_fns.ld ")
 #
- set(CMAKE_CXX_LINK_EXECUTABLE    "<CMAKE_C_COMPILER>   <CMAKE_CXX_LINK_FLAGS>  -nostdlib -L${PLATFORM_PATH}/esp32/tools/sdk/ld/ -L${PLATFORM_PATH}/esp32/tools/sdk/lib <LINK_FLAGS>   ${ESP32_LD}  ${ESP32_OPTS}-Wl,--start-group  <OBJECTS> <LINK_LIBRARIES>  ${ESP32_LIBS} -Wl,--end-group -Wl,-EL  -o <TARGET> ")
+ set(CMAKE_CXX_LINK_EXECUTABLE    "<CMAKE_C_COMPILER>   <CMAKE_CXX_LINK_FLAGS>  -nostdlib -L${PLATFORM_PATH}/tools/sdk/ld/ -L${PLATFORM_PATH}/tools/sdk/lib <LINK_FLAGS>   ${ESP32_LD}  ${ESP32_OPTS}-Wl,--start-group  <OBJECTS> <LINK_LIBRARIES>  ${ESP32_LIBS} -Wl,--end-group -Wl,-EL  -o <TARGET> ")
 #set(CMAKE_EXE_LINKER_FLAGS "" CACHE INTERNAL "")
 #set(CMAKE_CXX_LINK_FLAGS   "" CACHE INTERNAL "")
 #set(CMAKE_C_LINK_FLAGS     "" CACHE INTERNAL "")
