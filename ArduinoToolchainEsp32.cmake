@@ -6,7 +6,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 #=============================================================================#
-MESSAGE(STATUS "Setting up STM32 arduino cmake environment")
+MESSAGE(STATUS "Setting up ESP32 arduino cmake environment")
 #
 IF(NOT PLATFORM_TOOLCHAIN_PATH)
         MESSAGE(FATAL_ERROR "PLATFORM_TOOLCHAIN_PATH is not defined !")
@@ -56,4 +56,6 @@ if (ARDUINO_SDK_PATH)
 else ()
     message(FATAL_ERROR "Could not find Arduino SDK (set ARDUINO_SDK_PATH)!")
 endif ()
+
+#dump_all()
 
