@@ -48,8 +48,8 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
     SET(MAP_OPT  "-Wl,-Map,${TARGET_NAME}.map")
 
     #
-    set_board_flags(ARDUINO_COMPILE_FLAGS ARDUINO_LINK_FLAGS ${BOARD_ID} ${MANUAL})
     ENDIF(FALSE)
+    set_board_flags(ARDUINO_COMPILE_FLAGS ARDUINO_LINK_FLAGS ${BOARD_ID} ${MANUAL})
     # Add ld script
     MESSAGE(STATUS "ARDUINO_LINK_FLAGS ${ARDUINO_LINK_FLAGS},  LINK_FLAGS: ${LINK_FLAGS}")
     set_target_properties(${TARGET_NAME} PROPERTIES
@@ -66,17 +66,15 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
     if (NOT EXECUTABLE_OUTPUT_PATH)
         set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
     endif ()
-    
-  
+     
+    dump_all() 
+     
       # Display target size
-    #add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            #COMMAND ${CMAKE_COMMAND}
-            #ARGS -DFIRMWARE_IMAGE=${TARGET_NAME}.elf
-            #-DMCU=atmega1280
-            ##-DEEPROM_IMAGE=${TARGET_PATH}.eep
-            #-P ${ARDUINO_SIZE_SCRIPT}
+#    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            #COMMAND ${PLATFORM_TOOLCHAIN_PATH}/${ESP32_TOOLCHAIN_PREFIX}size
+            #ARGS -A=${TARGET_NAME}.elf
             #COMMENT "Calculating image size"
             #VERBATIM)
 
-   
+ 
 endfunction()
