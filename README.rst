@@ -1,3 +1,6 @@
+This is a fork of the original arduino-cmake project, but targetted at STM32duino and ESP32duino (WIP for ESP32)
+
+
 **STM32 Installation :** 
 
 - Install a toolchain.  I'd recommand using the arduino-stm32 toolchain available here https://github.com/stm32duino/arm-none-eabi-gcc . The code is about 50% smaller.
