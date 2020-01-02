@@ -42,3 +42,4 @@ generate_arduino_firmware(Blink2
                 PORT ${ARDUINO_DEFAULT_PORT}
                 )
 #--------------------------------------------------------------------------------------
+MESSAGE(STATUS "Now do make && make upload")

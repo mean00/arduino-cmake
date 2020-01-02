@@ -47,7 +47,7 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
         set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
     endif ()
      
-    dump_all() 
+    #dump_all() 
      
       # Display target size
 #    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
