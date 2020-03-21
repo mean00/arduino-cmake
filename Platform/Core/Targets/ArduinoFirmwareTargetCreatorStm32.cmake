@@ -54,7 +54,7 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
 
     # depending on the upload method we use different ld script
     # let's hardcode to bootloader for now 
-    dump_all()
+    #dump_all()
     # Check for blackMagic
     IF(ARDUINO_UPLOAD_METHOD MATCHES "BMP")
             SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/ld/jtag_c8.ld ") # Hack
