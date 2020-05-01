@@ -8,7 +8,9 @@ ELSE(TRY_CPU_FLAGS)
     _get_board_property(${BOARD_ID} build.cpu_flags CPU_FLAGS)
 ENDIF(TRY_CPU_FLAGS)
 
-set(COMPILE_FLAGS "-DF_CPU=${FCPU} ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
+# dont set the mcu speed, it is done elsewhere
+# set(COMPILE_FLAGS "-DF_CPU=${FCPU} ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
+ set(COMPILE_FLAGS " ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
 # This should be derived from the arduino config files
 # hardcode them for the moment
 
