@@ -57,7 +57,11 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
     #dump_all()
     # Check for blackMagic
     IF(ARDUINO_UPLOAD_METHOD MATCHES "BMP")
-            SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/ld/jtag_c8.ld ") # Hack
+            IF(NOT DEFINED ARDUINO_LD_FILE)
+                SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/ld/jtag_c8.ld ") # Hack
+            ELSE(NOT DEFINED ARDUINO_LD_FILE)
+                SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/ld/${ARDUINO_LD_FILE}.ld ") # Hack
+            ENDIF(NOT DEFINED ARDUINO_LD_FILE)
     ELSE()
         if( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
             SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript} ") # Hack
