@@ -15,7 +15,7 @@ ENDIF(NOT PLATFORM_TOOLCHAIN_PATH)
 
 
 LIST(APPEND CMAKE_SYSTEM_PREFIX_PATH "${PLATFORM_TOOLCHAIN_PATH}")
-SET(ESP32_TOOLCHAIN_PREFIX xtensa-esp32-elf-)
+SET(ESP32_TOOLCHAIN_PREFIX xtensa-esp32-elf-  CACHE INTERNAL "")
 
 FUNCTION(FATAL_BANNER msg)
     MESSAGE(STATUS "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
@@ -31,6 +31,7 @@ IF(NOT EXISTS "${PLATFORM_TOOLCHAIN_PATH}/${ESP32_TOOLCHAIN_PREFIX}gcc")
    FATAL_BANNER( "!! PLATFORM_TOOLCHAIN_PATH does not point to a valid toolchain (arm-none-eabi-gcc....)!! (${PLATFORM_TOOLCHAIN_PATH})")
 ENDIF()
 #
+dump_all()
 #
 SET(CMAKE_C_COMPILER_ID   "GNU" CACHE INTERNAL "")
 SET(CMAKE_CXX_COMPILER_ID "GNU" CACHE INTERNAL "")

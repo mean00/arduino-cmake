@@ -54,11 +54,21 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
 
     # depending on the upload method we use different ld script
     # let's hardcode to bootloader for now 
-    if( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
-        SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript} ") # Hack
-    else( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
-        SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.bootloader20.build.ldscript} ") # Hack
-    endif( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
+    #dump_all()
+    # Check for blackMagic
+    IF(ARDUINO_UPLOAD_METHOD MATCHES "BMP")
+            IF(NOT DEFINED ARDUINO_LD_FILE)
+                SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/ld/jtag_c8.ld ") # Hack
+            ELSE(NOT DEFINED ARDUINO_LD_FILE)
+                SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/ld/${ARDUINO_LD_FILE}.ld ") # Hack
+            ENDIF(NOT DEFINED ARDUINO_LD_FILE)
+    ELSE()
+        if( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
+            SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript} ") # Hack
+        else( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
+            SET(BOOTLOADER_LINK_OPT  "-T${RUNTIME_FILES_PATH}/${${BOARD_ID}.menu.cpu.bootloader20.build.ldscript} ") # Hack
+        endif( DEFINED ${BOARD_ID}.menu.cpu.DFUUploadMethod.build.ldscript  )
+    ENDIF()
 
     SET(BOOTLOADER_LINK_OPT  "${BOOTLOADER_LINK_OPT} -L${RUNTIME_FILES_PATH}/ld") # Hack
     MESSAGE(STATUS "Bootloader : <${BOOTLOADER_LINK_OPT}>")
@@ -124,14 +134,14 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
             VERBATIM)
 #_get_board_property(${BOARD_ID} build.mcu MCU)
     # Display target size
-    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND}
-            ARGS -DFIRMWARE_IMAGE=${TARGET_NAME}.elf
-            -DMCU=atmega1280
+    #add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            #COMMAND ${CMAKE_COMMAND}
+            #ARGS -DFIRMWARE_IMAGE=${TARGET_NAME}.elf
+            #-DMCU=atmega1280
             #-DEEPROM_IMAGE=${TARGET_PATH}.eep
-            -P ${ARDUINO_SIZE_SCRIPT}
-            COMMENT "Calculating image size"
-            VERBATIM)
+            #-P ${ARDUINO_SIZE_SCRIPT}
+            #COMMENT "Calculating image size"
+            #VERBATIM)
 
    
 endfunction()

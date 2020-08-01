@@ -16,24 +16,30 @@ SET(PLATFORM_TOOLCHAIN_PATH "/home/fx/Arduino/hardware/espressif/esp32/tools/xte
 SET(PLATFORM_PATH "/home/fx/Arduino/hardware/espressif/esp32")
 # and here we go
 SET(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake)
-MESSAGE(STATUS "Starting hello-esp32")
+MESSAGE(STATUS "Starting Blink-esp32")
 #
 #
 #
 Project("Hello_esp32" C CXX ASM) # ASM must be present !
-MESSAGE(STATUS "Dumping board")
-print_board_list()
+#MESSAGE(STATUS "Dumping board")
+#print_board_list()
 #
 # that changes the way the binary is linked, better to use DFU in all cases !
-SET(ARDUINO_UPLOAD_METHOD DFUUpload)
 
 #
-set(ARDUINO_DEFAULT_BOARD esp32) # Default Board ID, when not specified
-#set(ARDUINO_DEFAULT_PORT  ttyACM0) # Default Port, when not specified
+set(ARDUINO_DEFAULT_BOARD esp32) 
+set(ARDUINO_DEFAULT_PORT  ttyUSB0) 
+SET(ESP32_USB_UPLOAD_SPEED 921600)
+SET(ESP32_FLASH_SPEED      80m)
+SET(ESP32_FLASH_MODE       dio)
+SET(ESP32_FLASH_MODE_BOOTLOADER       qio)
+SET(ESP32_FLASH_SIZE       4)
+
 #set(ARDUINO_CPU           STM32F103C8)
 #
-generate_arduino_firmware(GetChipID 
-                SKETCH GetChipID.ino              # Folder to get the .ino from, must follow DIR_NAME/DIR_NAME.ino patten !
+generate_arduino_firmware(Blink2 
+                SKETCH Blink.ino              
                 PORT ${ARDUINO_DEFAULT_PORT}
                 )
 #--------------------------------------------------------------------------------------
+MESSAGE(STATUS "Now do make && make upload")

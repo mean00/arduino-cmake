@@ -4,7 +4,7 @@
 # see documentation at README
 #=============================================================================#
 function(generate_arduino_library INPUT_NAME)
-    message(STATUS "Generating ${INPUT_NAME}")
+    message(STATUS "Generating Library ${INPUT_NAME}")
     parse_generator_arguments(${INPUT_NAME} INPUT
             "NO_AUTOLIBS;MANUAL"                  # Options
             "BOARD;BOARD_CPU"                     # One Value Keywords
@@ -27,19 +27,12 @@ function(generate_arduino_library INPUT_NAME)
     set(ALL_LIBS)
     set(ALL_SRCS ${INPUT_SRCS} ${INPUT_HDRS})
 
-    if (NOT INPUT_MANUAL)
-        make_core_library(CORE_LIB ${BOARD_ID})
-    endif ()
 
     find_arduino_libraries(TARGET_LIBS "${ALL_SRCS}" "")
     set(LIB_DEP_INCLUDES)
     foreach (LIB_DEP ${TARGET_LIBS})
-        set(LIB_DEP_INCLUDES "${LIB_DEP_INCLUDES} -I\"${LIB_DEP}\"")
+        LIST(APPEND LIB_DEP_INCLUDES ${LIB_DEP})
     endforeach ()
-
-    if (NOT ${INPUT_NO_AUTOLIBS})
-        make_arduino_libraries(ALL_LIBS ${BOARD_ID} "" "${LIB_DEP_INCLUDES}" "")
-    endif ()
 
     list(APPEND ALL_LIBS ${CORE_LIB} ${INPUT_LIBS})
 
@@ -47,9 +40,8 @@ function(generate_arduino_library INPUT_NAME)
 
     set_board_flags(ARDUINO_COMPILE_FLAGS ARDUINO_LINK_FLAGS ${BOARD_ID} ${INPUT_MANUAL})
 
-    set_target_properties(${INPUT_NAME} PROPERTIES
-            COMPILE_FLAGS "${ARDUINO_COMPILE_FLAGS} ${COMPILE_FLAGS} ${LIB_DEP_INCLUDES}"
-            LINK_FLAGS "${ARDUINO_LINK_FLAGS} ${LINK_FLAGS}")
-
-    target_link_libraries(${INPUT_NAME} ${ALL_LIBS} "-lc -lm")
+    separate_arguments(my_ARDUINO_COMPILE_FLAGS UNIX_COMMAND "${ARDUINO_COMPILE_FLAGS}")
+    target_compile_options( ${INPUT_NAME} PRIVATE ${my_ARDUINO_COMPILE_FLAGS} )
+    target_compile_options( ${INPUT_NAME} PRIVATE  ${COMPILE_FLAGS} )
+    target_include_directories(${INPUT_NAME} PUBLIC ${LIB_DEP_INCLUDES})
 endfunction()

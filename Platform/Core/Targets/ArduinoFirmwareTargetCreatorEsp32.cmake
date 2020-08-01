@@ -47,7 +47,7 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
         set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
     endif ()
      
-    dump_all() 
+    #dump_all() 
      
       # Display target size
 #    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -55,6 +55,21 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
             #ARGS -A=${TARGET_NAME}.elf
             #COMMENT "Calculating image size"
             #VERBATIM)
+  add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND cp ${PLATFORM_PATH}//tools/partitions/default.csv partitions.csv
+            COMMENT "Copying partitions bin scheme"
+            VERBATIM)
 
+
+
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND python ${PLATFORM_PATH}/tools/gen_esp32part.py --flash-size ${ESP32_FLASH_SIZE}MB -q partitions.csv ${TARGET_NAME}.partitions.bin
+            COMMENT "Generating partitions bin image"
+            VERBATIM)
+
+     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND python ${PLATFORM_PATH}/tools/esptool/esptool.py --chip esp32 elf2image --flash_mode ${ESP32_FLASH_MODE} --flash_freq ${ESP32_FLASH_SPEED} --flash_size ${ESP32_FLASH_SIZE}MB -o ${TARGET_NAME}.img.bin ${TARGET_NAME}.elf
+            COMMENT "Generating bin image"
+            VERBATIM)
  
 endfunction()

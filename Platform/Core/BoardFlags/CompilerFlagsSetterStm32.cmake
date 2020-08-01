@@ -8,7 +8,9 @@ ELSE(TRY_CPU_FLAGS)
     _get_board_property(${BOARD_ID} build.cpu_flags CPU_FLAGS)
 ENDIF(TRY_CPU_FLAGS)
 
-set(COMPILE_FLAGS "-DF_CPU=${FCPU} ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
+# dont set the mcu speed, it is done elsewhere
+# set(COMPILE_FLAGS "-DF_CPU=${FCPU} ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
+ set(COMPILE_FLAGS " ${CPU_FLAGS} -DARDUINO=${NORMALIZED_SDK_VERSION} ")
 # This should be derived from the arduino config files
 # hardcode them for the moment
 
@@ -51,7 +53,8 @@ set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/include/libmap
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/usb/usb_lib/\" ") # Hack
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/usb/stm32f1/\" ") # Hack
 set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/libmaple/stm32f1/include/\" ")
-
+set(COMPILE_FLAGS "${COMPILE_FLAGS} ${STM32_SYSTEM_ROOT}/../libraries/SPI/src/\" ")
+ 
 ADD_TO_COMPILE_FLAGS(build.vect   "")
 ADD_TO_COMPILE_FLAGS(menu.cpu.${ARDUINO_UPLOAD_METHOD}Method.build.vect  "")
 

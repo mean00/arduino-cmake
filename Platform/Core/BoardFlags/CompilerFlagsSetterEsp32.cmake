@@ -45,14 +45,20 @@ MACRO(ADD_TO_COMPILE_FLAGS key prefix)
     endif( DEFINED ${BOARD_ID}.${key})
 ENDMACRO(ADD_TO_COMPILE_FLAGS key prefix)
 #
-SET(ESP32_SYSTEM_ROOT "/home/fx/Arduino/hardware/espressif/esp32/")
+SET(ESP32_SYSTEM_ROOT "${PLATFORM_PATH}")
 #
 #
+MACRO(ADD_RELATIVE_IPATH ipath)
+    set(COMPILE_FLAGS "${COMPILE_FLAGS} -I${ESP32_SYSTEM_ROOT}/${ipath}") # Hack, there is a better way to get the system path
+ENDMACRO(ADD_RELATIVE_IPATH ipath)
 MACRO(ADD_IPATH path)
-    set(COMPILE_FLAGS "${COMPILE_FLAGS} -I${ESP32_SYSTEM_ROOT}/tools/sdk/include/${path}") # Hack, there is a better way to get the system path
+    ADD_RELATIVE_IPATH(tools/sdk/include/${path})
 ENDMACRO(ADD_IPATH path)
 #
 #
+ADD_RELATIVE_IPATH(libraries/SPI/src/)
+ADD_RELATIVE_IPATH(libraries/FS/src/)
+ADD_RELATIVE_IPATH(libraries/SPIFFS/src/)
 ADD_IPATH(config)
 ADD_IPATH(app_trace)
 ADD_IPATH(app_update)
