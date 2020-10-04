@@ -1,7 +1,10 @@
 
 MACRO(Log)
-    MESSAGE(STATUS "Log: ${ARGN}")
+#    MESSAGE(STATUS "Log: ${ARGN}")
 ENDMACRO(Log)
+#
+#
+#
 FUNCTION(EXPORT_LIBRARY lib)    
     Log(${ARGN})
     cmake_parse_arguments(PARSE_ARGV 
@@ -23,17 +26,24 @@ FUNCTION(EXPORT_LIBRARY lib)
     ENDIF("${unused}" STREQUAL "")
 ENDFUNCTION(EXPORT_LIBRARY lib)
 
-
+#
+#
+#
 MACRO(IMPORT_LIBRARY lib )
     GET_PROPERTY( ${lib}_FLAGS          GLOBAL PROPERTY      CMAKE_STM32_${lib}_FLAGS  )
     GET_PROPERTY( ${lib}_INCLUDE_PATHS  GLOBAL PROPERTY      CMAKE_STM32_${lib}_INCLUDE_PATHS )
    
-    include_directories( ${${lib}_INCLUDE_PATHS} )
-    Log("Get Include for ${lib} : <${${lib}_INCLUDE_PATHS}>")
+    FOREACH(I ${${lib}_INCLUDE_PATHS} )
+        Log("Get Include for ${lib} : <${I}>")
+        include_directories( ${I} )
+    ENDFOREACH(I ${${lib}_INCLUDE_PATHS} )
     add_definitions( ${${lib}_FLAGS}   )
     Log("Get FLAGS for ${lib} : <${${lib}_FLAGS}>")
 ENDMACRO(IMPORT_LIBRARY lib)
 
+#
+#
+#
 FUNCTION(LINK_TO_LIBRARIES target )
     FOREACH(l ${ARGN})
              GET_PROPERTY( ${l}_NAME           GLOBAL PROPERTY      CMAKE_STM32_${l}_NAME  )
