@@ -1,6 +1,6 @@
 
 MACRO(Log)
-#    MESSAGE(STATUS "Log: ${ARGN}")
+   MESSAGE(STATUS "Log: ${ARGN}")
 ENDMACRO(Log)
 #
 #
@@ -45,8 +45,10 @@ ENDMACRO(IMPORT_LIBRARY lib)
 #
 #
 FUNCTION(LINK_TO_LIBRARIES target )
+    Log("Link to lib ${ARGN}")
     FOREACH(l ${ARGN})
              GET_PROPERTY( ${l}_NAME           GLOBAL PROPERTY      CMAKE_STM32_${l}_NAME  )
              TARGET_LINK_LIBRARIES(${target}  ${${l}_NAME})
+             Log("Linking to ${${l}_NAME}")
     ENDFOREACH(l ${ARGN})
 ENDFUNCTION(LINK_TO_LIBRARIES )
