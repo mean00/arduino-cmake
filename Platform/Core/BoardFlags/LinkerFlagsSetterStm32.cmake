@@ -2,7 +2,7 @@
 function(set_board_linker_flags LINKER_FLAGS BOARD_ID IS_MANUAL)
     IF(DEFINED ARDUINO_MCU_FLAGS)   
     ELSE(DEFINED ARDUINO_MCU_FLAGS)   
-        SET(ARDUINO_MCU_FLAGS "  -mcpu=cortex-m3")
+        SET(ARDUINO_MCU_FLAGS "  -mcpu=cortex-m3 -mthumb")
     ENDIF(DEFINED ARDUINO_MCU_FLAGS)   
 
     set(LINK_FLAGS "${LINK_FLAGS} -Os  -Wl,--gc-sections ${ARDUINO_MCU_FLAGS}  -Xlinker -print-memory-usage ")

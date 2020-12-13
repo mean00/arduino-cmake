@@ -13,10 +13,10 @@ IF(NOT DEFINED ARDUINO_CFLAGS_SET)
 
     IF(DEFINED ARDUINO_MCU_FLAGS)   
     ELSE(DEFINED ARDUINO_MCU_FLAGS)   
-        SET(ARDUINO_MCU_FLAGS "  -mcpu=cortex-m3")
+        SET(ARDUINO_MCU_FLAGS "  -mcpu=cortex-m3 -mthumb")
     ENDIF(DEFINED ARDUINO_MCU_FLAGS)   
  
-    SET(ARDUINO_DEFAULT_CFLAGS " -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500  -w  ${ARDUINO_MCU_FLAGS}  -mthumb   -g ")
+    SET(ARDUINO_DEFAULT_CFLAGS " -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500  -w  ${ARDUINO_MCU_FLAGS}    -g ")
     SET(ARDUINO_DEFAULT_CFLAGS " ${ARDUINO_DEFAULT_CFLAGS}  -DGENERIC_BOOTLOADER -DF_CPU=${MCU_SPEED}L  -DARDUINO_ARCH_STM32F1 -DCONFIG_MAPLE_MINI_NO_DISABLE_DEBUG    ")
     #SET(ARDUINO_DEFAULT_CFLAGS " ${ARDUINO_DEFAULT_CFLAGS}  -DF_CPU=72000000L  -DARDUINO_ARCH_STM32F1 ")
 

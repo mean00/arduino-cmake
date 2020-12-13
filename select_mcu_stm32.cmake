@@ -18,7 +18,7 @@ ELSEIF(USE_GD32F303)
     set(X_ARDUINO_DEFAULT_BOARD genericGD32F303C)        # Default Board ID, when not specified
     set(X_ARDUINO_CPU           GD32F303C8)
 #    SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4 ")
-    SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4 -mfloat-abi=softfp")# -mfpu=fpv4-sp-d16")
+    SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4 -mfloat-abi=softfp -march=armv7 -mthumb")# -mfpu=fpv4-sp-d16")
     ADD_DEFINITIONS("-DHIGH_SPEED_ADC")
     SET(X_ARDUINO_UPLOAD_METHOD BMP) # Use blackmagic link, if you comment it out you'll use DFU => 8kB flash
 ELSE()
