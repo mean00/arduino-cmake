@@ -1,7 +1,11 @@
 # ToDo: Comment
 function(set_board_linker_flags LINKER_FLAGS BOARD_ID IS_MANUAL)
+    IF(DEFINED ARDUINO_MCU_FLAGS)   
+    ELSE(DEFINED ARDUINO_MCU_FLAGS)   
+        SET(ARDUINO_MCU_FLAGS "  -mcpu=cortex-m3")
+    ENDIF(DEFINED ARDUINO_MCU_FLAGS)   
 
-    set(LINK_FLAGS "${LINK_FLAGS} -Os  -Wl,--gc-sections -mcpu=cortex-m3  -Xlinker -print-memory-usage ")
+    set(LINK_FLAGS "${LINK_FLAGS} -Os  -Wl,--gc-sections ${ARDUINO_MCU_FLAGS}  -Xlinker -print-memory-usage ")
     set(LINK_FLAGS "${LINK_FLAGS} -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align -lstdc++")
 IF(ARDUINO_USE_NEWLIB) # smaller
     set(LINK_FLAGS "${LINK_FLAGS} --specs=nano.specs") # -u _printf_float")
