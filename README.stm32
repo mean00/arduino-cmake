@@ -1,0 +1,4 @@
+Some settings :
+
+ARDUINO_MCU_FLAGS : To override the default (i.e. -mcpu=cortex-m3 -march=armv6xx)
+ARDUINO_LD_SCRIPT : To override the linker file
