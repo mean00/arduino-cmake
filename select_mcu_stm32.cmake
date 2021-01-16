@@ -2,9 +2,14 @@ OPTION(USE_GD32F103   "Use GD32F103 MCU" FALSE)
 OPTION(USE_GD32F303   "Use GD32F303 MCU" FALSE) 
 # Select platform and installation for extra arduino files AND toolchain (compiler...)
 SET(PLATFORM_ARCHITECTURE "STM32F1")
-IF(USE_GD32F103 OR USE_GD32F303)
-    SET(MCU_SPEED             96000000)                 # Max speed, above 96M USB will not work (?)
-ENDIF(USE_GD32F103 OR USE_GD32F303)
+
+IF(NOT MCU_SPEED)
+    IF(USE_GD32F103 OR USE_GD32F303)
+        SET(MCU_SPEED             96000000)                 # Max speed, above 96M USB will not work (?)
+    ELSE(USE_GD32F103 OR USE_GD32F303)
+        SET(MCU_SPEED             72000000)                 # Max speed, above 96M USB will not work (?)
+    ENDIF(USE_GD32F103 OR USE_GD32F303)
+ENDIF(NOT MCU_SPEED)
 
 # Board setup
 IF(USE_GD32F103)
