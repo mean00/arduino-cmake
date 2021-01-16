@@ -136,6 +136,11 @@ function(create_arduino_firmware_target TARGET_NAME BOARD_ID ALL_SRCS ALL_LIBS
             ${TARGET_NAME}.bin
             COMMENT "Generating BIN image"
             VERBATIM)
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND bash ${CMAKE_SOURCE_DIR}/cmake/freeFrash.bash
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            COMMENT "Computing free flash "
+            VERBATIM)
 #_get_board_property(${BOARD_ID} build.mcu MCU)
     # Display target size
     #add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
