@@ -23,9 +23,10 @@ ELSEIF(USE_GD32F303)
     SET(EXTENSION             "GD32F303")
     set(X_ARDUINO_DEFAULT_BOARD genericGD32F303C)        # Default Board ID, when not specified
     set(X_ARDUINO_CPU           GD32F303C8)
-    #SET(USE_FPU TRUE)
+    SET(USE_FPU TRUE)
     IF(USE_FPU )
         # FPU
+        ADD_DEFINITIONS("-DUSE_FPU=1")
         SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4  -mfloat-abi=hard -mfpu=fpv4-sp-d16  -mthumb")# -mfpu=fpv4-sp-d16")
     ELSE(USE_FPU )
         SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4 -mfloat-abi=softfp  -mthumb")# -mfpu=fpv4-sp-d16")
