@@ -23,8 +23,13 @@ ELSEIF(USE_GD32F303)
     SET(EXTENSION             "GD32F303")
     set(X_ARDUINO_DEFAULT_BOARD genericGD32F303C)        # Default Board ID, when not specified
     set(X_ARDUINO_CPU           GD32F303C8)
-#    SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4 ")
-    SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4 -mfloat-abi=softfp -march=armv7 -mthumb")# -mfpu=fpv4-sp-d16")
+    #SET(USE_FPU TRUE)
+    IF(USE_FPU )
+        # FPU
+        SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4  -mfloat-abi=hard -mfpu=fpv4-sp-d16  -mthumb")# -mfpu=fpv4-sp-d16")
+    ELSE(USE_FPU )
+        SET(ARDUINO_MCU_FLAGS               "  -mcpu=cortex-m4 -mfloat-abi=softfp  -mthumb")# -mfpu=fpv4-sp-d16")
+    ENDIF(USE_FPU)
     ADD_DEFINITIONS("-DHIGH_SPEED_ADC")
     SET(X_ARDUINO_UPLOAD_METHOD BMP) # Use blackmagic link, if you comment it out you'll use DFU => 8kB flash
     SET(ARDUINO_LD_SCRIPT "-T${CMAKE_CURRENT_SOURCE_DIR}/ldScript/GD32F3/gd32f3.ld -L${CMAKE_CURRENT_SOURCE_DIR}/ldScript/common ")
