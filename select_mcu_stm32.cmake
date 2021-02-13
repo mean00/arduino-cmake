@@ -1,5 +1,6 @@
 OPTION(USE_GD32F103   "Use GD32F103 MCU" FALSE) 
 OPTION(USE_GD32F303   "Use GD32F303 MCU" FALSE) 
+OPTION(USE_USB        "Enable USB MCU" FALSE) 
 # Select platform and installation for extra arduino files AND toolchain (compiler...)
 SET(PLATFORM_ARCHITECTURE "STM32F1")
 
@@ -24,6 +25,7 @@ ELSEIF(USE_GD32F303)
     set(X_ARDUINO_DEFAULT_BOARD genericGD32F303C)        # Default Board ID, when not specified
     set(X_ARDUINO_CPU           GD32F303C8)
     SET(USE_FPU TRUE)
+    SET(USE_USB TRUE)
     IF(USE_FPU )
         # FPU
         ADD_DEFINITIONS("-DUSE_FPU=1")
@@ -36,6 +38,7 @@ ELSEIF(USE_GD32F303)
     SET(ARDUINO_LD_SCRIPT "-T${CMAKE_CURRENT_SOURCE_DIR}/ldScript/GD32F3/gd32f3.ld -L${CMAKE_CURRENT_SOURCE_DIR}/ldScript/common ")
 ELSE()
     SET(EXTENSION             "STM32F103")
+    SET(USE_USB TRUE)
     set(X_ARDUINO_LD_FILE      jtag)      # Use that instead of default jtag-c8 to get the full 128 kB
     set(X_ARDUINO_DEFAULT_BOARD genericSTM32F103C)        # Default Board ID, when not specified
     set(X_ARDUINO_CPU           STM32F103C8)
